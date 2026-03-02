@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecel Marketplace Ops Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Icon Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { @apply bg-white p-6 rounded-2xl shadow-sm border border-slate-200 transition-all hover:shadow-md; }
+        .cat-card { @apply flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-all; }
+        .metric-value { @apply text-4xl font-bold tracking-tight; }
+        .metric-label { @apply text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased text-slate-900">
+
+    <div class="max-w-6xl mx-auto px-4 py-10">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <div class="inline-block px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold mb-3 uppercase tracking-wider">
+                    Telecel Marketplace
+                </div>
+                <h1 class="text-4xl font-extrabold text-slate-900">Operations Dashboard</h1>
+                <p class="text-lg text-slate-500 mt-1">Merchant Acquisition & Onboarding Intelligence</p>
+            </div>
+            <div class="bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm text-right">
+                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Status as of</span>
+                <span class="text-sm font-semibold text-slate-700">March 02, 2026</span>
+            </div>
+        </header>
+
+        <!-- KPI Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="card border-t-4 border-t-blue-500">
+                <p class="metric-label text-blue-600">Total Outlets Onboarded</p>
+                <p class="metric-value">235</p>
+            </div>
+            <div class="card border-t-4 border-t-emerald-500">
+                <p class="metric-label text-emerald-600">Total Outlets Live</p>
+                <p class="metric-value text-emerald-600">1</p>
+            </div>
+            <div class="card border-t-4 border-t-amber-500">
+                <p class="metric-label text-amber-600">Total Trained</p>
+                <p class="metric-value text-amber-600">1</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <!-- Growth Trend Chart -->
+            <div class="card lg:col-span-2">
+                <h3 class="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
+                    <i data-lucide="trending-up" class="w-5 h-5 text-blue-500"></i>
+                    Onboarding Growth Trend (MoM)
+                </h3>
+                <div class="h-[350px]">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Merchant Categories List -->
+            <div class="card lg:col-span-1 overflow-hidden flex flex-col">
+                <h3 class="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
+                    <i data-lucide="layout-grid" class="w-5 h-5 text-purple-500"></i>
+                    Merchant Categories
+                </h3>
+                <div class="space-y-3 overflow-y-auto max-h-[350px] pr-2 custom-scrollbar flex-grow">
+                    <!-- Category Items -->
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shirt" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Fashion & Footwear</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">61</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="utensils" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Restaurants & Fast Food</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">35</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="smartphone" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Mobile Phones & Accs</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">34</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="tv" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Electronics & Appliances</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">32</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="monitor" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Computers & Games</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">18</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="briefcase" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Home & Office</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">18</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shopping-cart" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Supermarkets</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">11</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="car" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Auto & More</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">8</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="baby" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Baby & Kids</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">7</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="croissant" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Bakery</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">6</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="pill" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Pharmacy & Health</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">3</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="sparkles" class="text-slate-400 w-5 h-5"></i>
+                            <span class="text-sm font-semibold">Spas & Salons</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full text-xs font-bold">2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="card mb-10">
+            <h3 class="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
+                <i data-lucide="map-pin" class="w-5 h-5 text-red-500"></i>
+                Merchant Geographical Distribution
+            </h3>
+            <div class="rounded-xl overflow-hidden border border-slate-100 shadow-inner">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1DJEh-j9kn6AwYo2m-i7aImbr1CqYnFo&ehbc=2E312F" width="100%" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Growth Trend Chart
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26'],
+                datasets: [{
+                    label: 'Onboarded Outlets',
+                    data: [2, 9, 1, 33, 9, 181],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#3b82f6'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: '#f1f5f9' },
+                        ticks: { font: { weight: 'bold' } }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
